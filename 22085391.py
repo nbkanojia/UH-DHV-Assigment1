@@ -1,6 +1,11 @@
 
 """
 GitHub link : https://github.com/nbkanojia/UH-DHV-Assigment1
+
+source :
+1)https://catalog.data.gov/dataset/electric-vehicle-population-data
+2)www.bmwseattle.com/electric-vehicle-tips/washington-state-ev-tax-credits/
+3)https://cars.usnews.com/cars-trucks/advice/washington-ev-tax-credits
 """
 import pandas as pd
 import matplotlib.pyplot as plt
