@@ -48,24 +48,21 @@ def plot_ev_producers(df, grid):
         .fillna(0)
 
     pivot_df[("Count", "Total")] = pivot_df.iloc[:, 0] + pivot_df.iloc[:, 1]
-    # Initialize the matplotlib figure
-    # fig = plt.figure(dpi=300)
-    # ax = fig.add_subplot()
 
-    # Plot the total crashes
+    # Plot bar
     sns.set_theme(palette="pastel")
     ax = sns.barplot(x="Make", y="Count",
                      data=pivot_df.loc[:, ("Count", "Total")].reset_index(
                          name='Count'),
                      label="Plug-in Hybrid Electric Vehicle \n(PHEV)",
                      color="b")
-
+    
     ax.bar_label(ax.containers[0],
                  labels=pivot_df.loc[:, ("Count", "Total")].values.round(1),
                  fontsize=12, rotation=0)
 
     ax.set_ylim(0, 100)
-    # Plot the crashes where alcohol was involved
+    # Plot the bar
     sns.set_color_codes("muted")
     ax1 = sns.barplot(x="Make", y="Count",
                       data=pivot_df[(
@@ -89,17 +86,13 @@ def plot_ev_range(df, grid):
     """ create EV horizontal bar char to compare the battery range """
 
     fig = plt.subplot(grid[0, 1])
-
-    # plt.subplots_adjust(left=0.5,right=1)
     df_make_range = df[["Make", "Electric Range"]]
     df_grouped = df_make_range.groupby(["Make"])\
         .agg({'Electric Range': 'max'})
     df_grouped["Make"] = df_grouped.index
-    # print(df_grouped)
     df_grouped = df_grouped.sort_values(by=['Electric Range'],
                                         ascending=False)
-    # sns.set_theme()
-    # sns.set_color_codes("pastel")
+    # plot var for range compare
     ax = sns.barplot(x="Electric Range", y="Make", data=df_grouped, color="b")
     ax.bar_label(ax.containers[0], labels=df_grouped['Electric Range'],
                  fontsize=12)
@@ -121,9 +114,7 @@ def plot_compare_year_of_make(df, grid):
              "Battery Electric Vehicle (BEV)"]
     df_phev = df_grouped.loc[df_grouped["Electric Vehicle Type"] ==
                              "Plug-in Hybrid Electric Vehicle (PHEV)"]
-
-    # plt.figure(figsize=(10, 6),dpi=300)
-    # print(df_grouped)
+    # plot line chart to compare produciton
     sns.lineplot(data=df_bev, y="Count", x="Model Year",
                  label="Battery Electric Vehicle (BEV)")
     sns.lineplot(data=df_phev, y="Count", x="Model Year",
@@ -139,7 +130,8 @@ def plot_city_ev(df, grid):
     plt.subplot(grid[1, 2])
     df_grouped = df.groupby(["City"]).size().reset_index(name='Count')
     df_grouped = df_grouped.sort_values(by=['Count'], ascending=False)[0:10]
-
+    
+    # plot py chart to compare cities
     plt.pie(df_grouped['Count'], labels=df_grouped['City'], autopct='%1.1f%%',
             pctdistance=0.60, startangle=60, radius=1.1,
             textprops={'fontsize': 11})
